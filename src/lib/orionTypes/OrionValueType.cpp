@@ -55,9 +55,9 @@ const char* valueTypeName(const orion::ValueType _type)
 
 /* ****************************************************************************
 *
-* schemaType - 
+* defaultType - 
 */
-const char* schemaType(orion::ValueType valueType)
+const char* defaultType(ValueType valueType)
 {
   switch (valueType)
   {

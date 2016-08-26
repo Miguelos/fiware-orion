@@ -58,9 +58,9 @@ extern const char* valueTypeName(const orion::ValueType _type);
 
 /* ****************************************************************************
 *
-* schemaType - 
+* defaultType - 
 */
-extern const char* schemaType(orion::ValueType valueType);
+extern const char* defaultType(orion::ValueType valueType);
 
 }
 

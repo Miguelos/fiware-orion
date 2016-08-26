@@ -64,7 +64,6 @@ std::string parseContextAttributeCompoundValue
   orion::CompoundValueNode*          parent
 )  
 {
-
   if (node->IsObject())
   {
     int counter  = 0;
@@ -218,14 +217,7 @@ std::string parseContextAttributeCompoundValue
 
     if (!caP->typeGiven)
     {
-      if (type == "Array")
-      {
-        caP->type = schemaType(orion::ValueTypeVector);
-      }
-      else
-      {
-        caP->type = schemaType(orion::ValueTypeObject);
-      }
+      caP->type = (type == "Object")? defaultType(orion::ValueTypeObject) : defaultType(orion::ValueTypeVector);
     }
   }
 
@@ -424,11 +416,15 @@ std::string parseContextAttributeCompoundValueStandAlone
       parent->childV.push_back(cvnP);
 
       //
-      // Recursive call if Object or Array
+      // Start recursive calls if Object or Array
       //
       if ((nodeType == "Object") || (nodeType == "Array"))
       {
         parseContextAttributeCompoundValue(iter, caP, cvnP);
+      }
+      else if (!caP->typeGiven)
+      {
+        caP->type = defaultType(caP->valueType);
       }
 
       ++counter;
@@ -481,11 +477,15 @@ std::string parseContextAttributeCompoundValueStandAlone
       parent->childV.push_back(cvnP);
         
       //
-      // Recursive call if Object or Array
+      // Start recursive calls if Object or Array
       //
       if ((nodeType == "Object") || (nodeType == "Array"))
       {
         parseContextAttributeCompoundValue(iter, caP, cvnP);
+      }
+      else if (!caP->typeGiven)
+      {
+        caP->type = defaultType(caP->valueType);
       }
 
       ++counter;

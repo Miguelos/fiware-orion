@@ -71,9 +71,8 @@
 
 /* ****************************************************************************
 *
-* other special types
+* Default Types for entities, attributes and metadata
 */
-#define DATE_TYPE                 "DateTime"
 #define DEFAULT_ENTITY_TYPE       "Thing"
 #define DEFAULT_ATTR_STRING_TYPE  "Text"
 #define DEFAULT_ATTR_NUMBER_TYPE  "Number"
@@ -81,6 +80,7 @@
 #define DEFAULT_ATTR_ARRAY_TYPE   "StructuredValue"
 #define DEFAULT_ATTR_OBJECT_TYPE  "StructuredValue"
 #define DEFAULT_ATTR_NULL_TYPE    "None"
+#define DATE_TYPE                 "DateTime"
 
 
 

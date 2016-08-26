@@ -50,6 +50,17 @@ using namespace mongo;
 
 /* ****************************************************************************
 *
+* Metadata::~Metadata -
+*/
+Metadata::~Metadata()
+{
+  release();
+}
+
+
+
+/* ****************************************************************************
+*
 * Metadata::Metadata -
 */
 Metadata::Metadata()
@@ -67,7 +78,6 @@ Metadata::Metadata()
 /* ****************************************************************************
 *
 * Metadata::Metadata -
-*
 */
 Metadata::Metadata(Metadata* mP, bool useDefaultType)
 {
@@ -84,10 +94,13 @@ Metadata::Metadata(Metadata* mP, bool useDefaultType)
 
   if (useDefaultType && !typeGiven)
   {
-    type = schemaType(valueType);
-    if ((valueType == orion::ValueTypeObject) && (compoundValueP->valueType == orion::ValueTypeVector))
+    if ((compoundValueP == NULL) || (compoundValueP->valueType != orion::ValueTypeVector))
     {
-      type = schemaType(orion::ValueTypeVector);
+      type = defaultType(valueType);
+    }
+    else
+    {
+      type = defaultType(orion::ValueTypeVector);
     }
   }
 }
@@ -155,6 +168,8 @@ Metadata::Metadata(const std::string& _name, const std::string& _type, bool _val
   typeGiven       = false;
   compoundValueP  = NULL;
 }
+
+
 
 /* ****************************************************************************
 *
@@ -382,6 +397,8 @@ void Metadata::fill(const struct Metadata& md)
   stringValue  = md.stringValue;
 }
 
+
+
 /* ****************************************************************************
 *
 * toStringValue -
@@ -431,7 +448,14 @@ std::string Metadata::toJson(bool isLastElement)
   out = JSON_STR(name) + ":{";
 
   /* This is needed for entities coming from NGSIv1 (which allows empty or missing types) */
-  out += (type != "")? JSON_VALUE("type", type) : JSON_VALUE("type", schemaType(valueType));
+  std::string defType = defaultType(valueType);
+
+  if (compoundValueP && compoundValueP->isVector())
+  {
+    defType = defaultType(orion::ValueTypeVector);
+  }
+
+  out += (type != "")? JSON_VALUE("type", type) : JSON_VALUE("type", defType);
   out += ",";
 
   if (valueType == orion::ValueTypeString)

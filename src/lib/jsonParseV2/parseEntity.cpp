@@ -24,6 +24,7 @@
 */
 #include "rapidjson/document.h"
 
+#include "common/globals.h"
 #include "rest/ConnectionInfo.h"
 #include "ngsi/ParseData.h"
 #include "ngsi/Request.h"

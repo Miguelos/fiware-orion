@@ -90,9 +90,9 @@ static std::string parseMetadataObject(const Value& start, Metadata* mdP)
       else if ((type == "Array") || (type == "Object"))
       {
         compoundVector = (type == "Array")? true : false;
-
         mdP->valueType = orion::ValueTypeObject;  // Used both for Array and Object ...
-        std::string r = parseMetadataCompoundValue(iter, mdP, NULL);
+        std::string r  = parseMetadataCompoundValue(iter, mdP, NULL);
+
         if (r != "OK")
         {
           alarmMgr.badInput(clientIp, "json parse error in Metadata compound value");
@@ -116,7 +116,7 @@ static std::string parseMetadataObject(const Value& start, Metadata* mdP)
 
   if (!mdP->typeGiven)
   {
-    mdP->type = (compoundVector)? schemaType(orion::ValueTypeVector) : schemaType(mdP->valueType);
+    mdP->type = (compoundVector)? defaultType(orion::ValueTypeVector) : defaultType(mdP->valueType);
   }
 
   return "OK";

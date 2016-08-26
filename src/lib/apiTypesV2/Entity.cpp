@@ -28,6 +28,7 @@
 #include "logMsg/traceLevels.h"
 #include "common/tag.h"
 #include "common/string.h"
+#include "common/globals.h"
 #include "common/errorMessages.h"
 #include "alarmMgr/alarmMgr.h"
 #include "parse/forbiddenChars.h"
